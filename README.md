@@ -1,6 +1,6 @@
 # ts-observe
 
-A small tool to observe classes, properties and inheritance in triple-stores
+A small tool to observe classes, properties and inheritance in onthologies
 
 ## Requirements:
 
@@ -10,5 +10,5 @@ A small tool to observe classes, properties and inheritance in triple-stores
 
 ## Usage:
 
-* `./ts-observe <triple-store.owl> <Observe query> <output file>`
+* `./ts-observe <onthology> <Observe query> <output file>`
 
