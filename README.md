@@ -1,6 +1,6 @@
 # ts-observe
 
-A small tool to observe classes, properties and inheritance in onthologies
+A small tool to observe classes, properties and inheritance in ontologies
 
 ## Requirements:
 
@@ -10,5 +10,5 @@ A small tool to observe classes, properties and inheritance in onthologies
 
 ## Usage:
 
-* `./ts-observe <onthology> <Observe query> <output file>`
+* `./ts-observe <ontology> <Observe query> <output file>`
 
