@@ -15,7 +15,7 @@ if [ ! -f "FormatCSV.py" ]; then
 fi
 
 if ! [ $# -eq 3 ]; then
-	echo 'ts-observe <triple-store.owl> <Observe-query.rq> <output.csv>'
+	echo 'ts-observe <ontology> <Observe-query.rq> <output.csv>'
 	exit 1
 fi
 

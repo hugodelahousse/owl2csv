@@ -1,6 +1,6 @@
 # ts-observe
 
-A small tool to observe classes, properties and inheritance in triple-stores
+A small tool to observe classes, properties and inheritance in ontologies
 
 ## Requirements:
 
@@ -10,5 +10,5 @@ A small tool to observe classes, properties and inheritance in triple-stores
 
 ## Usage:
 
-* `./ts-observe <triple-store.owl> <Observe query> <output file>`
-
+* `./ts-observe <ontology> <Observe query> <output file>`
+* If you want the output file to use prefixes instead of the full uris, you have to document them in the FormatCSV.py file.
