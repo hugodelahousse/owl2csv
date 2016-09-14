@@ -12,6 +12,6 @@ if __name__=="__main__":
 	parser.add_argument('-o', '--output',type=argparse.FileType('w'), required=True, help='Output file')
 	args = parser.parse_args()
 	# print(args)
-	os.system("arq \"--dataset={{{0}}} --query={1} --results={2} > {3}\"".format(",".join([file.name for file in args.dataset]), args.query.name, args.format, args.output.name))
+	os.system("arq --data={{{0}}} --query={1} --results={2} > {3}".format(",".join([file.name for file in args.dataset]), args.query.name, args.format, args.output.name))
 	if args.format.lower() == "csv":
 		FormatCSV.formatFile(args.output.name)
