@@ -1,25 +1,17 @@
-#!/bin/bash
-if ! [ -x "$(command -v arq)" ]; then
-	echo 'Error: arq was not found, please make sure Jena is installed and you have added it to your path'>&2
-	exit 1
-fi
+#!/usr/bin/env python
+import os
+import argparse
+import FormatCSV
 
-if ! [ -x "$(command -v python)" ]; then
-	echo 'Error: python was not found, please make sure it is installed and you have added it to your path'>&2
-	exit 1
-fi
-
-if [ ! -f "FormatCSV.py" ]; then
-	echo 'Error: The python formatter was not found, please make sure it is in your current directory'>&2
-	exit 1
-fi
-
-if ! [ $# -eq 3 ]; then
-	echo 'ts-observe <ontology> <Observe-query.rq> <output.csv>'
-	exit 1
-fi
-
-arq --data=$1 --query=$2 --results CSV > $3 && python FormatCSV.py $3
-if [ $? -eq 0 ]; then
-    echo "Observation successful! Check results in $3"
-fi
+if __name__=="__main__":
+	parser = argparse.ArgumentParser()
+	parser.add_argument('-d','--dataset', nargs='+',
+			required=True, type=argparse.FileType('r'), help='Ontologies to process')
+	parser.add_argument('-q', '--query',  type=argparse.FileType('r'), required=True, help='Query to apply to the ontology')
+	parser.add_argument('-f', '--format', nargs='?', default='CSV', help='The output format')
+	parser.add_argument('-o', '--output',type=argparse.FileType('w'), required=True, help='Output file')
+	args = parser.parse_args()
+	# print(args)
+	os.system("arq \"--dataset={{{0}}} --query={1} --results={2} > {3}\"".format(",".join([file.name for file in args.dataset]), args.query.name, args.format, args.output.name))
+	if args.format.lower() == "csv":
+		FormatCSV.formatFile(args.output.name)

@@ -15,15 +15,18 @@ prefixDict = {
    
 
 }
+def formatFile(filename):
+	with open(filename, "r") as f:
+	    data = f.read()
+	    for prefix, uri in prefixDict.iteritems():
+		data = data.replace(uri[1:-1], prefix+":")
+	with open(filename, "w") as f:
+	    f.write(data)
 
-if len(sys.argv) < 2:
-    print("Input file not found")
-    exit()
+if __name__=="__main__":
+	if len(sys.argv) < 2:
+	    print("Input file not found")
+	    exit()
 
-filename = sys.argv[1]
-with open(filename, "r") as f:
-    data = f.read()
-    for prefix, uri in prefixDict.iteritems():
-        data = data.replace(uri[1:-1], prefix+":")
-with open(filename, "w") as f:
-    f.write(data)
+	filename = sys.argv[1]
+	formatFile(filename)
