@@ -5,12 +5,26 @@ import json
 import argparse
 import codecs
 
+defaultPrefixes = {
+    "rdfs": "<http://www.w3.org/2000/01/rdf-schema#>",
+    "owl": "<http://www.w3.org/2002/07/owl#>",
+    "event": "<http://purl.org/NET/c4dm/event.owl#>",
+    "xmlsn": "<http://xmlns.com/foaf/0.1/familyName>",
+    "xsd": "<http://www.w3.org/2001/XMLSchema#>",
+    "afn": "<http://jena.apache.org/ARQ/function#>",
+    "cdm": "<http://publications.europa.eu/ontology/cdm>",
+    "frbr": "<http://erlangen-crm.org/current/>",
+    "skos": "<http://www.w3.org/2004/02/skos/core#>",
+    "frbroo": "<http://erlangen-crm.org/efrbroo/>",
+    "doremus": "<http://data.doremus.org/ontology#>"
+}
+
 
 def formatFile(filename, prefix_file):
-    prefixDict = json.load(prefix_file)
+    defaultPrefixes.update(json.load(prefix_file))
     with codecs.open(filename, 'r', 'utf-8') as f:
         data = f.read()
-        for prefix, uri in prefixDict.iteritems():
+        for prefix, uri in defaultPrefixes.iteritems():
             data = data.replace(uri[1:-1], prefix+":")
         with codecs.open(filename, 'w', 'utf-8') as f:
             f.write(data)
