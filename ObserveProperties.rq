@@ -1,0 +1,98 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX cocoon: <http://data.curie.fr/ontology/cocoon#>
+PREFIX owl:  	<http://www.w3.org/2002/07/owl#>
+PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
+PREFIX xmlsn:  <http://xmlns.com/foaf/0.1/familyName>
+PREFIX ermw: <http://www.semanticweb.org/BNP/ontologies/2015/12/ERMW#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX afn: <http://jena.apache.org/ARQ/function#>
+PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
+PREFIX jolux: <http://data.legilux.public.lu/resource/ontology/jolux#>
+PREFIX frbr: <http://erlangen-crm.org/current/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+select distinct ?property ?propertyType (group_concat(distinct ?superProperty ; separator = ", ") AS ?superProperties) ?inverse ?comment ?propertyAligned ?alignmentComment  ?scopeNote ?editorialNote
+ 
+where
+{
+  {
+	?property a owl:ObjectProperty.
+    ?property a ?propertyType.
+	OPTIONAL {
+		?property rdfs:subPropertyOf ?superProperty. 
+	}
+	OPTIONAL {
+		?property owl:inverseOf ?inverse. 
+	}
+	OPTIONAL {
+    	?propertyAligned owl:equivalentProperty ?property.
+	}
+	OPTIONAL {
+    	?property jolux:alignmentComment ?alignmentComment.
+	}
+	OPTIONAL {
+		?inverse  owl:inverseOf ?property. 
+	}
+	OPTIONAL {
+		?property rdfs:comment ?comment. 
+	}
+	OPTIONAL {
+		?property skos:scopeNote ?scopeNote. 
+	}
+	OPTIONAL {
+		?property skos:editorialNote ?editorialNote. 
+	}
+  } 
+UNION
+  {
+
+	?property a owl:DatatypeProperty.
+    ?property a ?propertyType.
+	OPTIONAL {
+		?property rdfs:subPropertyOf ?superProperty. 
+	}
+	OPTIONAL {
+		?property rdfs:comment ?comment. 
+	}
+	OPTIONAL {
+    	?propertyAligned owl:equivalentProperty ?property.
+	}
+	OPTIONAL {
+    	?property jolux:alignmentComment ?alignmentComment.
+	}
+	OPTIONAL {
+		?property skos:scopeNote ?scopeNote. 
+	}
+	OPTIONAL {
+		?property skos:editorialNote ?editorialNote. 
+	}
+  }
+  UNION
+  {
+
+	?property a owl:DatatypeAnnotation.
+    ?property a ?propertyType.
+	OPTIONAL {
+		?property rdfs:subPropertyOf ?superProperty. 
+	}
+	OPTIONAL {
+		?property owl:inverseOf ?inverse. 
+	}
+	OPTIONAL {
+		 ?inverse  owl:inverseOf ?property. 
+	}
+	OPTIONAL {
+		?property rdfs:comment ?comment. 
+	}
+	OPTIONAL {
+		?property skos:scopeNote ?scopeNote. 
+	}
+	OPTIONAL {
+		?property skos:editorialNote ?editorialNote. 
+	}
+  }
+}  
+GROUP BY ?property ?propertyType ?superProperties ?inverse ?comment ?propertyAligned ?alignmentComment ?scopeNote ?editorialNote
+ORDER BY ?property
+
+
