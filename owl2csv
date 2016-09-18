@@ -20,10 +20,10 @@ defaultPrefixes = {
 
 
 def formatFile(filename, prefix_file):
-    defaultPrefixes.update(json.load(prefix_file))
+    prefixDict = json.load(prefix_file)
     with codecs.open(filename, 'r', 'utf-8') as f:
         data = f.read()
-        for prefix, uri in defaultPrefixes.iteritems():
+        for prefix, uri in prefixDict.iteritems():
             data = data.replace(uri[1:-1], prefix+":")
         with codecs.open(filename, 'w', 'utf-8') as f:
             f.write(data)
@@ -47,8 +47,8 @@ if __name__ == "__main__":
                         help='The json file containing prefix reference')
 
     args = parser.parse_args()
-    os.system("arq --data={{{0}}} --query={1} --results={2} > {3}".format(
-        ",".join([file.name for file in args.dataset]),
+    os.system("arq  --query={1} --results={2} > {3}".format(
+        "--data="+" --data=".join([file.name for file in args.dataset]),
         args.query.name,
         args.format,
         args.output.name
