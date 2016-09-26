@@ -6,10 +6,10 @@
     "xsd": "<http://www.w3.org/2001/XMLSchema#>",
     "afn": "<http://jena.apache.org/ARQ/function#>",
     "cdm": "<http://publications.europa.eu/ontology/cdm#>",
-    "ecrm": "<http://erlangen-crm.org/current/>",
+    "frbr": "<http://erlangen-crm.org/current/>",
     "skos": "<http://www.w3.org/2004/02/skos/core#>",
-    "efrbroo":"<http://erlangen-crm.org/efrbroo/>",
-    "mus":"<http://data.doremus.org/ontology#>",
+    "frbroo":"<http://erlangen-crm.org/efrbroo/>",
+    "doremus":"<http://data.doremus.org/ontology#>",
     "vcard":"<http://www.w3.org/2006/vcard/ns#>",
     "skox-xl":"<http://www.w3.org/2008/05/skos-xl#>",
     "org":"<http://www.w3.org/ns/org#>",
@@ -18,6 +18,5 @@
     "dct":"<http://purl.org/dc/terms/>",
     "lexinfo":"<http://www.lexinfo.net/ontology/2.0/lexinfo#>",
     "lexvo":"<http://lexvo.org/ontology#>",
-    "prov":"<http://www.w3.org/ns/prov#>",
-    "lemon":"<http://lemon-model.net/lemon#>"
+    "lemon":"<http://lemon-model.net/lemon#>",
 }
