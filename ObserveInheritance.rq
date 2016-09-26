@@ -1,14 +1,7 @@
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX cocoon: <http://data.curie.fr/ontology/cocoon#>
 PREFIX owl:  	<http://www.w3.org/2002/07/owl#>
-PREFIX event: <http://purl.org/NET/c4dm/event.owl#>
 PREFIX xmlsn:  <http://xmlns.com/foaf/0.1/familyName>
-PREFIX ermw: <http://www.semanticweb.org/BNP/ontologies/2015/12/ERMW#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
-PREFIX afn: <http://jena.apache.org/ARQ/function#>
-PREFIX cdm: <http://publications.europa.eu/ontology/cdm#>
-PREFIX jolux: <http://data.legilux.lu/resource/ontology/jolux#>
-PREFIX frbr: <http://erlangen-crm.org/current/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 select ?class ?property ?propertyType (group_concat(distinct ?sup ; separator = ", ") AS ?superPropNames) (?inheritedFrom as ?domainFrom) ?restrictionFrom ?rangeName ?cardinality ?comment ?scopeNote ?editorialNote  
