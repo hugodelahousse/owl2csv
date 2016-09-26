@@ -2,8 +2,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl:  	<http://www.w3.org/2002/07/owl#>
 PREFIX xmlsn:  <http://xmlns.com/foaf/0.1/familyName>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX jolux: <http://data.legilux.lu/resource/ontology/jolux#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
 
 select distinct ?class ?superClass ?comment ?alignmentComment ?scopeNote ?editorialNote
   

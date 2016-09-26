@@ -3,6 +3,7 @@ PREFIX owl:  	<http://www.w3.org/2002/07/owl#>
 PREFIX xmlsn:  <http://xmlns.com/foaf/0.1/familyName>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX jolux: <http://data.legilux.lu/resource/ontology/jolux#>
 
 select distinct ?property ?propertyType (group_concat(distinct ?superProperty ; separator = ", ") AS ?superProperties) ?inverse ?comment ?propertyAligned ?alignmentComment  ?scopeNote ?editorialNote
  
