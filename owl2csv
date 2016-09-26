@@ -57,12 +57,14 @@ if __name__ == "__main__":
                         help='The json file containing prefix reference')
 
     args = parser.parse_args()
-    os.system("arq  --query={1} --results={2} > {3}".format(
+    query = "arq {0} --query={1} --results={2} > {3}".format(
         "--data="+" --data=".join([file.name for file in args.dataset]),
         args.query.name,
         args.format,
         args.output.name
             )
-        )
+    print(" ".join([file.name for file in args.dataset]))
+    print(query)
+    os.system(query)
     if args.format.lower() == "csv" and args.prefixes is not None:
         formatFile(args.output.name, args.prefixes)
