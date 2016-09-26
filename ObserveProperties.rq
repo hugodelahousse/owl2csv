@@ -35,7 +35,8 @@ where
 	}
 	OPTIONAL {
 		?property rdfs:comment ?comment. 
-		FILTER langMatches(lang(?comment), 'en')
+		VALUES ?wantedLang {"en" ''}.
+		FILTER langMatches(lang(?comment), ?wantedLang)
 	}
 	OPTIONAL {
 		?property skos:scopeNote ?scopeNote. 
@@ -54,7 +55,8 @@ UNION
 	}
 	OPTIONAL {
 		?property rdfs:comment ?comment. 
-		FILTER langMatches(lang(?comment), 'en')
+		VALUES ?wantedLang {"en" ''}.
+		FILTER langMatches(lang(?comment), ?wantedLang)
 	}
 	OPTIONAL {
     	?propertyAligned owl:equivalentProperty ?property.
@@ -85,7 +87,8 @@ UNION
 	}
 	OPTIONAL {
 		?property rdfs:comment ?comment. 
-		FILTER langMatches(lang(?comment), 'en')
+		VALUES ?wantedLang {"en" ''}.
+		FILTER langMatches(lang(?comment), ?wantedLang)
 	}
 	OPTIONAL {
 		?property skos:scopeNote ?scopeNote. 
