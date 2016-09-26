@@ -18,5 +18,6 @@
     "dct":"<http://purl.org/dc/terms/>",
     "lexinfo":"<http://www.lexinfo.net/ontology/2.0/lexinfo#>",
     "lexvo":"<http://lexvo.org/ontology#>",
+    "prov":"<http://www.w3.org/ns/prov#>",
     "lemon":"<http://lemon-model.net/lemon#>"
 }

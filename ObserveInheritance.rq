@@ -26,6 +26,8 @@ where
 
 	OPTIONAL {
 		?property rdfs:comment ?d.
+		VALUES ?wantedLang {"en" ''}.
+		FILTER langMatches(lang(?d), ?wantedLang)
 		BIND(REPLACE(REPLACE(?d, ',', ' '), '\n', ' ') AS ?comment). 
 	}
 
@@ -67,6 +69,8 @@ OPTIONAL {
 
 	OPTIONAL {
 		?property rdfs:comment ?d.
+		VALUES ?wantedLang {"en" ''}.
+		FILTER langMatches(lang(?d), ?wantedLang)
 		BIND(REPLACE(REPLACE(?d, ',', ' '), '\n', ' ') AS ?comment). 
 	}
 	
