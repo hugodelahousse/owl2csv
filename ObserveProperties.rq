@@ -5,7 +5,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX jolux: <http://data.legilux.lu/resource/ontology/jolux#>
 
-select distinct ?property ?propertyType (group_concat(distinct ?superProperty ; separator = ", ") AS ?superProperties) ?inverse ?comment ?propertyAligned ?alignmentComment  ?scopeNote ?editorialNote
+select distinct ?property ?propertyType (group_concat(distinct ?superProperty ; separator = ", ") AS ?superProperties) ?inverse ?altLabel ?comment ?propertyAligned ?alignmentComment  ?scopeNote ?editorialNote
  
 where
 {
@@ -28,8 +28,13 @@ where
 		?inverse  owl:inverseOf ?property. 
 	}
 	OPTIONAL {
+	?property skos:altLabel ?altLabel. 
+	VALUES ?wantedLang {"fr" ''}.
+	FILTER langMatches(lang(?altLabel), ?wantedLang)
+	}
+	OPTIONAL {
 		?property rdfs:comment ?comment. 
-		VALUES ?wantedLang {"en" ''}.
+		VALUES ?wantedLang {"fr" ''}.
 		FILTER langMatches(lang(?comment), ?wantedLang)
 	}
 	OPTIONAL {
@@ -46,6 +51,11 @@ UNION
     ?property a ?propertyType.
 	OPTIONAL {
 		?property rdfs:subPropertyOf ?superProperty. 
+	}
+	OPTIONAL {
+	?property skos:altLabel ?altLabel. 
+	VALUES ?wantedLang {"fr" ''}.
+	FILTER langMatches(lang(?altLabel), ?wantedLang)
 	}
 	OPTIONAL {
 		?property rdfs:comment ?comment. 
@@ -80,6 +90,11 @@ UNION
 		 ?inverse  owl:inverseOf ?property. 
 	}
 	OPTIONAL {
+	?property skos:altLabel ?altLabel. 
+	VALUES ?wantedLang {"fr" ''}.
+	FILTER langMatches(lang(?altLabel), ?wantedLang)
+	}
+	OPTIONAL {
 		?property rdfs:comment ?comment. 
 		VALUES ?wantedLang {"en" ''}.
 		FILTER langMatches(lang(?comment), ?wantedLang)
@@ -92,7 +107,7 @@ UNION
 	}
   }
 }  
-GROUP BY ?property ?propertyType ?superProperties ?inverse ?comment ?propertyAligned ?alignmentComment ?scopeNote ?editorialNote
+GROUP BY ?property ?propertyType ?superProperties ?inverse ?altLabel ?comment ?propertyAligned ?alignmentComment ?scopeNote ?editorialNote
 ORDER BY ?property
 
 
