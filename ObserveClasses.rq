@@ -6,44 +6,48 @@ PREFIX jolux: <http://data.legilux.lu/resource/ontology/jolux#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
 select distinct ?class ?label ?superClass ?comment ?alignmentComment ?scopeNote ?editorialNote
-  
-where{
 
-	?class a owl:Class.
+where {
+  ?class a owl:Class.
 
-	OPTIONAL {
-		?class rdfs:subClassOf ?superClass. 
-		?superClass a owl:Class.
-	}
-	OPTIONAL {
-		?class rdfs:subClassOf ?superClass. 
-		?class rdfs:subClassOf skos:Concept.
-	}
-	OPTIONAL {
-    	?class jolux:alignmentComment ?alignmentComment.
-    	VALUES ?wantedLang {"en" ''}.
-		FILTER langMatches(lang(?alignmentComment), ?wantedLang)
-	}
-	OPTIONAL {
-		?class rdfs:comment ?comment. 
-		VALUES ?wantedLang {"en" ''}.
-		FILTER langMatches(lang(?comment), ?wantedLang)
-	}
-	OPTIONAL {
-		?class skos:scopeNote ?scopeNote. 
-		VALUES ?wantedLang {"en" ''}.
-		FILTER langMatches(lang(?scopeNote), ?wantedLang)
-	}
-	OPTIONAL {
-		?class skos:editorialNote ?editorialNote. 
-		VALUES ?wantedLang {"en" ''}.
-		FILTER langMatches(lang(?editorialNote), ?wantedLang)
-	}
+  OPTIONAL {
+    ?class rdfs:subClassOf ?superClass. 
+    ?superClass a owl:Class.
+  }
 
-	OPTIONAL {
-	    ?class rdfs:label ?label
-	}
-} 
+  OPTIONAL {
+    ?class rdfs:subClassOf ?superClass. 
+      ?class rdfs:subClassOf skos:Concept.
+  }
+
+  OPTIONAL {
+    ?class jolux:alignmentComment ?alignmentComment.
+      VALUES ?wantedLang {"en" ''}.
+      FILTER langMatches(lang(?alignmentComment), ?wantedLang)
+  }
+
+  OPTIONAL {
+    ?class rdfs:comment ?comment. 
+      VALUES ?wantedLang {"en" ''}.
+      FILTER langMatches(lang(?comment), ?wantedLang)
+  }
+
+  OPTIONAL {
+    ?class skos:scopeNote ?scopeNote. 
+      VALUES ?wantedLang {"en" ''}.
+      FILTER langMatches(lang(?scopeNote), ?wantedLang)
+  }
+
+  OPTIONAL {
+    ?class skos:editorialNote ?editorialNote. 
+      VALUES ?wantedLang {"en" ''}.
+      FILTER langMatches(lang(?editorialNote), ?wantedLang)
+  }
+
+  OPTIONAL {
+    ?class rdfs:label ?label
+  }
+}
 GROUP BY ?class ?superClass ?comment ?alignmentComment ?scopeNote ?editorialNote
 ORDER BY ?class
 

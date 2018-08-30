@@ -5,89 +5,73 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX jolux: <http://data.legilux.lu/resource/ontology/jolux#>
 
-select ?class ?label ?property ?propertyType (group_concat(distinct ?sup ; separator = ", ") AS ?superPropNames) (?inheritedFrom as ?domainFrom) ?restrictionFrom ?rangeName ?cardinality ?comment ?scopeNote ?editorialNote
+select ?class ?label ?property ?propertyType (group_concat(distinct COALESCE(?sup, '') ; separator = ", ") AS ?superPropNames) (?inheritedFrom as ?domainFrom) ?restrictionFrom ?rangeName ?cardinality ?comment ?scopeNote ?editorialNote
 where
 {
-  {	
-	VALUES ?propertyType {owl:DatatypeAnnotation owl:DatatypeProperty owl:ObjectProperty }
-	?class rdfs:subClassOf* ?inheritedFrom.
-	?property rdfs:domain ?inheritedFrom.
-	?property a ?propertyType.
+  {
+    VALUES ?propertyType {owl:DatatypeAnnotation owl:DatatypeProperty owl:ObjectProperty }
+    ?class rdfs:subClassOf* ?inheritedFrom.
+    ?property rdfs:domain ?inheritedFrom.
+    ?property a ?propertyType.
 
-	#FILTER((afn:namespace(?sup)) = STR(?uri))
-	#BIND(afn:strjoin("",?prefix,afn:localname(?sup)) as ?superPropName)
-	
 
-	OPTIONAL {
-	    ?class rdfs:label ?label
-	}
 
-	OPTIONAL {
-		?property rdfs:subPropertyOf* ?sup.
-		?sup rdfs:range ?range. 
-		BIND(REPLACE(STR(?range),".*(#|/)","") as ?rangeName).
-	}
-
-	OPTIONAL {
-		?property rdfs:comment ?d.
-		VALUES ?wantedLang {"en" ''}.
-		FILTER langMatches(lang(?d), ?wantedLang)
-		BIND(REPLACE(REPLACE(?d, ',', ' '), '\n', ' ') AS ?comment). 
-	}
-
-	OPTIONAL {
-		?property skos:scopeNote ?n.
-		BIND(REPLACE(REPLACE(?n, ',', ' '), '\n', ' ') AS ?scopeNote). 
-	}
-	OPTIONAL {
-		?property skos:editorialNote ?e.
-		BIND(REPLACE(REPLACE(?e, ',', ' '), '\n', ' ') AS ?editorialNote). 
-	}
-  }
-UNION
- {
- 	VALUES ?propertyType {owl:DatatypeAnnotation owl:DatatypeProperty owl:ObjectProperty }
-	?class rdfs:subClassOf* ?restrictionFrom.
-	?restrictionFrom rdfs:subClassOf ?r .
-	?r a owl:Restriction .
-	?r owl:onProperty ?property .
-	?property a ?propertyType.
-    #BIND('owl:Restriction' AS ?inheritedFrom).
-	
-#	OPTIONAL {
-#		?property rdfs:subPropertyOf+ ?sup.
-#	}
-OPTIONAL {
-		?property rdfs:subPropertyOf* ?sup.
-		?sup rdfs:range ?range. 
-		BIND(REPLACE(STR(?range),".*(#|/)","") as ?rangeName).
+    OPTIONAL {
+      ?class rdfs:label ?label
     }
-#	OPTIONAL{ 
-#		?property rdfs:range ?range. 
-#		BIND(REPLACE(STR(?range),".*(#|/)","") as ?rangeName).
-#	}
-#	OPTIONAL{ 
-#		?r owl:owl:maxQualifiedCardinality ?card .
-#		BIND('0..1' AS ?cardinality).
-#	}
 
-	OPTIONAL {
-		?property rdfs:comment ?d.
-		VALUES ?wantedLang {"en" ''}.
-		FILTER langMatches(lang(?d), ?wantedLang)
-		BIND(REPLACE(REPLACE(?d, ',', ' '), '\n', ' ') AS ?comment). 
-	}
-	
-	OPTIONAL {
-		?property skos:scopeNote ?n.
-		BIND(REPLACE(REPLACE(?n, ',', ' '), '\n', ' ') AS ?scopeNote). 
-	}
-	OPTIONAL {
-		?property skos:editorialNote ?e.
-		BIND(REPLACE(REPLACE(?e, ',', ' '), '\n', ' ') AS ?editorialNote). 
-	}
+    OPTIONAL {
+      ?property rdfs:subPropertyOf* ?sup.
+      ?sup rdfs:range ?range. 
+      BIND(REPLACE(STR(?range),".*(#|/)","") as ?rangeName).
+    }
 
-  } 
+    OPTIONAL {
+      ?property rdfs:comment ?d.
+      VALUES ?wantedLang {"en" ''}.
+      FILTER langMatches(lang(?d), ?wantedLang)
+      BIND(REPLACE(REPLACE(?d, ',', ' '), '\n', ' ') AS ?comment).
+    }
+
+    OPTIONAL {
+      ?property skos:scopeNote ?n.
+      BIND(REPLACE(REPLACE(?n, ',', ' '), '\n', ' ') AS ?scopeNote).
+    }
+    OPTIONAL {
+      ?property skos:editorialNote ?e.
+      BIND(REPLACE(REPLACE(?e, ',', ' '), '\n', ' ') AS ?editorialNote).
+    }
+  }
+  UNION
+  {
+    VALUES ?propertyType {owl:DatatypeAnnotation owl:DatatypeProperty owl:ObjectProperty }
+    ?class rdfs:subClassOf* ?restrictionFrom.
+    ?restrictionFrom rdfs:subClassOf ?r .
+    ?r a owl:Restriction .
+    ?r owl:onProperty ?property .
+    ?property a ?propertyType.
+    OPTIONAL {
+      ?property rdfs:subPropertyOf* ?sup.
+      ?sup rdfs:range ?range.
+      BIND(REPLACE(STR(?range),".*(#|/)","") as ?rangeName).
+    }
+    OPTIONAL {
+      ?property rdfs:comment ?d.
+      VALUES ?wantedLang {"en" ''}.
+      FILTER langMatches(lang(?d), ?wantedLang)
+      BIND(REPLACE(REPLACE(?d, ',', ' '), '\n', ' ') AS ?comment).
+    }
+
+    OPTIONAL {
+      ?property skos:scopeNote ?n.
+      BIND(REPLACE(REPLACE(?n, ',', ' '), '\n', ' ') AS ?scopeNote).
+    }
+    OPTIONAL {
+      ?property skos:editorialNote ?e.
+      BIND(REPLACE(REPLACE(?e, ',', ' '), '\n', ' ') AS ?editorialNote).
+    }
+
+  }
 }
 GROUP BY ?class ?property ?propertyType ?inheritedFrom ?domainFrom ?restrictionFrom ?rangeName ?cardinality ?comment ?scopeNote ?editorialNote
 ORDER BY ?class ?property

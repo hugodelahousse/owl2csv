@@ -5,113 +5,113 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX jolux: <http://data.legilux.lu/resource/ontology/jolux#>
 
-select distinct ?property ?label ?propertyType ?superProperty ?inverse ?altLabel ?comment ?propertyAligned ?alignmentComment  ?scopeNote ?editorialNote
- 
+select distinct ?property ?label ?propertyType (GROUP_CONCAT(DISTINCT COALESCE(?superProperty, ''); separator=", ") AS ?superProperties) ?inverse ?altLabel ?comment ?propertyAligned ?alignmentComment  ?scopeNote ?editorialNote
+
 where
 {
   {
-	?property a owl:ObjectProperty.
-    ?property a ?propertyType.
+    ?property a owl:ObjectProperty.
+      ?property a ?propertyType.
 
-	OPTIONAL {
-	    ?property rdfs:label ?label
-	}
+    OPTIONAL {
+      ?property rdfs:label ?label
+    }
 
-	OPTIONAL {
-		?property rdfs:subPropertyOf ?superProperty. 
-	}
-	OPTIONAL {
-		?property owl:inverseOf ?inverse. 
-	}
-	OPTIONAL {
-    	?propertyAligned owl:equivalentProperty ?property.
-	}
-	OPTIONAL {
-    	?property jolux:alignmentComment ?alignmentComment.
-	}
-	OPTIONAL {
-		?inverse  owl:inverseOf ?property. 
-	}
-	OPTIONAL {
-	?property skos:altLabel ?altLabel. 
-	VALUES ?wantedLang {"fr" ''}.
-	FILTER langMatches(lang(?altLabel), ?wantedLang)
-	}
-	OPTIONAL {
-		?property rdfs:comment ?comment. 
-		VALUES ?wantedLang {"fr" ''}.
-		FILTER langMatches(lang(?comment), ?wantedLang)
-	}
-	OPTIONAL {
-		?property skos:scopeNote ?scopeNote. 
-	}
-	OPTIONAL {
-		?property skos:editorialNote ?editorialNote. 
-	}
+    OPTIONAL {
+      ?property rdfs:subPropertyOf ?superProperty. 
+    }
+    OPTIONAL {
+      ?property owl:inverseOf ?inverse. 
+    }
+    OPTIONAL {
+      ?propertyAligned owl:equivalentProperty ?property.
+    }
+    OPTIONAL {
+      ?property jolux:alignmentComment ?alignmentComment.
+    }
+    OPTIONAL {
+      ?inverse  owl:inverseOf ?property. 
+    }
+    OPTIONAL {
+      ?property skos:altLabel ?altLabel. 
+        VALUES ?wantedLang {"fr" ''}.
+        FILTER langMatches(lang(?altLabel), ?wantedLang)
+    }
+    OPTIONAL {
+      ?property rdfs:comment ?comment. 
+        VALUES ?wantedLang {"fr" ''}.
+        FILTER langMatches(lang(?comment), ?wantedLang)
+    }
+    OPTIONAL {
+      ?property skos:scopeNote ?scopeNote. 
+    }
+    OPTIONAL {
+      ?property skos:editorialNote ?editorialNote. 
+    }
   } 
-UNION
+  UNION
   {
 
-	?property a owl:DatatypeProperty.
-    ?property a ?propertyType.
-	OPTIONAL {
-		?property rdfs:subPropertyOf ?superProperty. 
-	}
-	OPTIONAL {
-	?property skos:altLabel ?altLabel. 
-	VALUES ?wantedLang {"fr" ''}.
-	FILTER langMatches(lang(?altLabel), ?wantedLang)
-	}
-	OPTIONAL {
-		?property rdfs:comment ?comment. 
-		VALUES ?wantedLang {"en" ''}.
-		FILTER langMatches(lang(?comment), ?wantedLang)
-	}
-	OPTIONAL {
-    	?propertyAligned owl:equivalentProperty ?property.
-	}
-	OPTIONAL {
-    	?property jolux:alignmentComment ?alignmentComment.
-	}
-	OPTIONAL {
-		?property skos:scopeNote ?scopeNote. 
-	}
-	OPTIONAL {
-		?property skos:editorialNote ?editorialNote. 
-	}
+    ?property a owl:DatatypeProperty.
+      ?property a ?propertyType.
+      OPTIONAL {
+        ?property rdfs:subPropertyOf ?superProperty. 
+      }
+    OPTIONAL {
+      ?property skos:altLabel ?altLabel. 
+        VALUES ?wantedLang {"fr" ''}.
+        FILTER langMatches(lang(?altLabel), ?wantedLang)
+    }
+    OPTIONAL {
+      ?property rdfs:comment ?comment. 
+        VALUES ?wantedLang {"en" ''}.
+        FILTER langMatches(lang(?comment), ?wantedLang)
+    }
+    OPTIONAL {
+      ?propertyAligned owl:equivalentProperty ?property.
+    }
+    OPTIONAL {
+      ?property jolux:alignmentComment ?alignmentComment.
+    }
+    OPTIONAL {
+      ?property skos:scopeNote ?scopeNote. 
+    }
+    OPTIONAL {
+      ?property skos:editorialNote ?editorialNote. 
+    }
   }
   UNION
   {
 
-	?property a owl:DatatypeAnnotation.
+    ?property a owl:DatatypeAnnotation.
     ?property a ?propertyType.
-	OPTIONAL {
-		?property rdfs:subPropertyOf ?superProperty. 
-	}
-	OPTIONAL {
-		?property owl:inverseOf ?inverse. 
-	}
-	OPTIONAL {
-		 ?inverse  owl:inverseOf ?property. 
-	}
-	OPTIONAL {
-	?property skos:altLabel ?altLabel. 
-	VALUES ?wantedLang {"fr" ''}.
-	FILTER langMatches(lang(?altLabel), ?wantedLang)
-	}
-	OPTIONAL {
-		?property rdfs:comment ?comment. 
-		VALUES ?wantedLang {"en" ''}.
-		FILTER langMatches(lang(?comment), ?wantedLang)
-	}
-	OPTIONAL {
-		?property skos:scopeNote ?scopeNote. 
-	}
-	OPTIONAL {
-		?property skos:editorialNote ?editorialNote. 
-	}
+    OPTIONAL {
+      ?property rdfs:subPropertyOf ?superProperty. 
+    }
+    OPTIONAL {
+      ?property owl:inverseOf ?inverse. 
+    }
+    OPTIONAL {
+      ?inverse  owl:inverseOf ?property. 
+    }
+    OPTIONAL {
+      ?property skos:altLabel ?altLabel. 
+        VALUES ?wantedLang {"fr" ''}.
+        FILTER langMatches(lang(?altLabel), ?wantedLang)
+    }
+    OPTIONAL {
+      ?property rdfs:comment ?comment. 
+        VALUES ?wantedLang {"en" ''}.
+        FILTER langMatches(lang(?comment), ?wantedLang)
+    }
+    OPTIONAL {
+      ?property skos:scopeNote ?scopeNote. 
+    }
+    OPTIONAL {
+      ?property skos:editorialNote ?editorialNote. 
+    }
   }
-}  
+}
 GROUP BY ?property ?propertyType ?superProperties ?inverse ?altLabel ?comment ?propertyAligned ?alignmentComment ?scopeNote ?editorialNote
 ORDER BY ?property
 
