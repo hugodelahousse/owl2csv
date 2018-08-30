@@ -2,7 +2,7 @@ import sys
 import click
 import json
 import csv
-from rdflib import Graph, Namespace, URIRef
+from rdflib import Graph, Namespace, URIRef, Literal
 
 
 def observe_dataset(datasets, query, prefixes, lang):
@@ -16,7 +16,8 @@ def observe_dataset(datasets, query, prefixes, lang):
 
     kwargs = {}
     if lang:
-        kwargs = {'initBindings':{'wantedLang': lang}}
+        kwargs = {'initBindings':{'wantedLang': Literal('fr')}}
+    print(kwargs)
     return g, g.query(query, **kwargs)
 
 
