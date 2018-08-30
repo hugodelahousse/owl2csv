@@ -20,6 +20,11 @@ where
       BIND(REPLACE(STR(?range),".*(#|/)","") as ?rangeName).
     }
 
+   OPTIONAL {
+      ?property rdfs:label ?label
+      FILTER langMatches(lang(?label), ?wantedLang)
+    }
+    
     OPTIONAL {
       ?property rdfs:comment ?d.
       FILTER langMatches(lang(?d), ?wantedLang)
