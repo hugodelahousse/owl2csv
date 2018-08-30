@@ -15,6 +15,7 @@ where
 
     OPTIONAL {
       ?property rdfs:label ?label
+      FILTER langMatches(lang(?label), ?wantedLang)
     }
 
     OPTIONAL {
@@ -34,12 +35,10 @@ where
     }
     OPTIONAL {
       ?property skos:altLabel ?altLabel. 
-        VALUES ?wantedLang {"fr" ''}.
         FILTER langMatches(lang(?altLabel), ?wantedLang)
     }
     OPTIONAL {
       ?property rdfs:comment ?comment. 
-        VALUES ?wantedLang {"fr" ''}.
         FILTER langMatches(lang(?comment), ?wantedLang)
     }
     OPTIONAL {
@@ -59,12 +58,10 @@ where
       }
     OPTIONAL {
       ?property skos:altLabel ?altLabel. 
-        VALUES ?wantedLang {"fr" ''}.
         FILTER langMatches(lang(?altLabel), ?wantedLang)
     }
     OPTIONAL {
       ?property rdfs:comment ?comment. 
-        VALUES ?wantedLang {"en" ''}.
         FILTER langMatches(lang(?comment), ?wantedLang)
     }
     OPTIONAL {
@@ -96,12 +93,10 @@ where
     }
     OPTIONAL {
       ?property skos:altLabel ?altLabel. 
-        VALUES ?wantedLang {"fr" ''}.
         FILTER langMatches(lang(?altLabel), ?wantedLang)
     }
     OPTIONAL {
       ?property rdfs:comment ?comment. 
-        VALUES ?wantedLang {"en" ''}.
         FILTER langMatches(lang(?comment), ?wantedLang)
     }
     OPTIONAL {

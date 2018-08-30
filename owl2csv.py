@@ -5,7 +5,7 @@ import csv
 from rdflib import Graph, Namespace, URIRef
 
 
-def observe_dataset(datasets, query, prefixes):
+def observe_dataset(datasets, query, prefixes, lang):
     g = Graph()
     if prefixes:
         prefixes = json.load(prefixes)
@@ -14,7 +14,10 @@ def observe_dataset(datasets, query, prefixes):
     for dataset in datasets:
         g.parse(dataset)
 
-    return g, g.query(query.read())
+    kwargs = {}
+    if lang:
+        kwargs = {'initBindings':{'wantedLang': lang}}
+    return g, g.query(query, **kwargs)
 
 
 def create_csv(graph, query_result, f):
@@ -35,8 +38,9 @@ def create_csv(graph, query_result, f):
 @click.argument('query', type=click.File('r'))
 @click.option('--prefixes', '-p', default=None, type=click.File('r'))
 @click.option('--output', '-o', default=sys.stdout, type=click.File('w'))
-def command(datasets, query, prefixes, output):
-    graph, query_result = observe_dataset(datasets, query, prefixes)
+@click.option('--lang', '-l', default=None)
+def command(datasets, query, prefixes, output, lang):
+    graph, query_result = observe_dataset(datasets, query, prefixes, lang)
     create_csv(graph, query_result, output)
 
 

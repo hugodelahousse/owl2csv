@@ -22,30 +22,27 @@ where {
 
   OPTIONAL {
     ?class jolux:alignmentComment ?alignmentComment.
-      VALUES ?wantedLang {"en" ''}.
       FILTER langMatches(lang(?alignmentComment), ?wantedLang)
   }
 
   OPTIONAL {
     ?class rdfs:comment ?comment. 
-      VALUES ?wantedLang {"en" ''}.
       FILTER langMatches(lang(?comment), ?wantedLang)
   }
 
   OPTIONAL {
     ?class skos:scopeNote ?scopeNote. 
-      VALUES ?wantedLang {"en" ''}.
       FILTER langMatches(lang(?scopeNote), ?wantedLang)
   }
 
   OPTIONAL {
     ?class skos:editorialNote ?editorialNote. 
-      VALUES ?wantedLang {"en" ''}.
       FILTER langMatches(lang(?editorialNote), ?wantedLang)
   }
 
   OPTIONAL {
     ?class rdfs:label ?label
+    FILTER langMatches(lang(?label), ?wantedLang)
   }
 }
 GROUP BY ?class ?superClass ?comment ?alignmentComment ?scopeNote ?editorialNote
