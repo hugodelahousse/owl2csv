@@ -14,13 +14,6 @@ where
     ?property rdfs:domain ?inheritedFrom.
     ?property a ?propertyType.
 
-
-
-    OPTIONAL {
-      ?class rdfs:label ?label
-      FILTER langMatches(lang(?label), ?wantedLang)
-    }
-
     OPTIONAL {
       ?property rdfs:subPropertyOf* ?sup.
       ?sup rdfs:range ?range. 
