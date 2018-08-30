@@ -50,6 +50,12 @@ where
     ?r a owl:Restriction .
     ?r owl:onProperty ?property .
     ?property a ?propertyType.
+
+    OPTIONAL {
+      ?property rdfs:label ?label
+      FILTER langMatches(lang(?label), ?wantedLang)
+    }
+
     OPTIONAL {
       ?property rdfs:subPropertyOf* ?sup.
       ?sup rdfs:range ?range.
