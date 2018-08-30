@@ -17,7 +17,6 @@ def observe_dataset(datasets, query, prefixes, lang):
     kwargs = {}
     if lang:
         kwargs = {'initBindings':{'wantedLang': Literal('fr')}}
-    print(kwargs)
     return g, g.query(query, **kwargs)
 
 
