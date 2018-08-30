@@ -5,7 +5,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX jolux: <http://data.legilux.lu/resource/ontology/jolux#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 
-select distinct ?class ?superClass ?comment ?alignmentComment ?scopeNote ?editorialNote
+select distinct ?class ?label ?superClass ?comment ?alignmentComment ?scopeNote ?editorialNote
   
 where{
 
@@ -38,6 +38,10 @@ where{
 		?class skos:editorialNote ?editorialNote. 
 		VALUES ?wantedLang {"en" ''}.
 		FILTER langMatches(lang(?editorialNote), ?wantedLang)
+	}
+
+	OPTIONAL {
+	    ?class rdfs:label ?label
 	}
 } 
 GROUP BY ?class ?superClass ?comment ?alignmentComment ?scopeNote ?editorialNote

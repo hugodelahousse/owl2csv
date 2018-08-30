@@ -5,7 +5,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX jolux: <http://data.legilux.lu/resource/ontology/jolux#>
 
-select ?class ?property ?propertyType (group_concat(distinct ?sup ; separator = ", ") AS ?superPropNames) (?inheritedFrom as ?domainFrom) ?restrictionFrom ?rangeName ?cardinality ?comment ?scopeNote ?editorialNote  
+select ?class ?label ?property ?propertyType (group_concat(distinct ?sup ; separator = ", ") AS ?superPropNames) (?inheritedFrom as ?domainFrom) ?restrictionFrom ?rangeName ?cardinality ?comment ?scopeNote ?editorialNote
 where
 {
   {	
@@ -17,7 +17,11 @@ where
 	#FILTER((afn:namespace(?sup)) = STR(?uri))
 	#BIND(afn:strjoin("",?prefix,afn:localname(?sup)) as ?superPropName)
 	
-	
+
+	OPTIONAL {
+	    ?class rdfs:label ?label
+	}
+
 	OPTIONAL {
 		?property rdfs:subPropertyOf* ?sup.
 		?sup rdfs:range ?range. 
